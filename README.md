@@ -1,5 +1,7 @@
 # SQLBot
 
+在使用本项目之前，请在hugging face官网下载**Qwen2.5-Coder-1.5B-Instruct**的模型参数文件。
+
 这个仓库现在包含两条可直接运行的基础流水线：
 
 1. `scripts/build_sft_dataset.py`
