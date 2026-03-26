@@ -1,0 +1,37 @@
+{
+  "seed": 42,
+  "train_records": 13279,
+  "validation_records": 1571,
+  "train_error_distribution": {
+    "筛选条件错误": 2801,
+    "聚合函数错误": 1764,
+    "排序方向错误": 1226,
+    "字段选择错误": 4426,
+    "连接条件遗漏": 2248,
+    "分组与聚合不匹配": 814
+  },
+  "validation_error_distribution": {
+    "聚合函数错误": 261,
+    "排序方向错误": 168,
+    "字段选择错误": 509,
+    "筛选条件错误": 284,
+    "分组与聚合不匹配": 117,
+    "连接条件遗漏": 232
+  },
+  "enabled_error_types": [
+    "select_column",
+    "aggregate_function",
+    "group_by",
+    "join_condition",
+    "order_direction",
+    "filter_operator"
+  ],
+  "train_files": [
+    "train_spider.json",
+    "train_others.json"
+  ],
+  "validation_files": [
+    "dev.json"
+  ],
+  "max_mutations_per_example": 2
+}

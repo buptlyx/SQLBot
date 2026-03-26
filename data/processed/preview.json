@@ -1,0 +1,132 @@
+[
+  {
+    "id": "train-train_spider-0-filter_operator",
+    "split": "train",
+    "source_file": "train_spider.json",
+    "source_index": 0,
+    "db_id": "department_management",
+    "question": "How many heads of the departments are older than 56 ?",
+    "schema_text": "- head: head_ID (number) [PK], name (text), born_state (text), age (number)",
+    "wrong_sql": "SELECT count(*) FROM head WHERE age < 56",
+    "correct_sql": "SELECT count(*) FROM head WHERE age > 56",
+    "error_type": "筛选条件错误",
+    "messages": [
+      {
+        "role": "system",
+        "content": "你是数据库课程中的 SQL 智能批阅助手。\n你需要根据题目、相关表结构和学生提交的 SQL，输出标准答案以及清晰的纠错解析。\n请始终使用下面的固定格式作答：\n\n正确SQL：\n```sql\n...\n```\n\n纠错解析：\n错误类型：...\n错误定位：...\n原因说明：...\n修改建议：...\n"
+      },
+      {
+        "role": "user",
+        "content": "请批阅下面这道 SQL 练习。\n\n题目：\nHow many heads of the departments are older than 56 ?\n\n数据库 ID：\ndepartment_management\n\n相关 Schema：\n- head: head_ID (number) [PK], name (text), born_state (text), age (number)\n\n学生 SQL：\n```sql\nSELECT count(*) FROM head WHERE age < 56\n```"
+      },
+      {
+        "role": "assistant",
+        "content": "正确SQL：\n```sql\nSELECT count(*) FROM head WHERE age > 56\n```\n\n纠错解析：\n错误类型：筛选条件错误\n错误定位：WHERE 子句\n原因说明：学生把筛选运算符从 `>` 写成了 `<`，会把题目要求保留的数据过滤方向反过来，导致结果集范围错误。\n修改建议：将 WHERE 中的运算符 `<` 改回 `>`。"
+      }
+    ]
+  },
+  {
+    "id": "train-train_spider-0-aggregate_function",
+    "split": "train",
+    "source_file": "train_spider.json",
+    "source_index": 0,
+    "db_id": "department_management",
+    "question": "How many heads of the departments are older than 56 ?",
+    "schema_text": "- head: head_ID (number) [PK], name (text), born_state (text), age (number)",
+    "wrong_sql": "SELECT MAX(*) FROM head WHERE age > 56",
+    "correct_sql": "SELECT count(*) FROM head WHERE age > 56",
+    "error_type": "聚合函数错误",
+    "messages": [
+      {
+        "role": "system",
+        "content": "你是数据库课程中的 SQL 智能批阅助手。\n你需要根据题目、相关表结构和学生提交的 SQL，输出标准答案以及清晰的纠错解析。\n请始终使用下面的固定格式作答：\n\n正确SQL：\n```sql\n...\n```\n\n纠错解析：\n错误类型：...\n错误定位：...\n原因说明：...\n修改建议：...\n"
+      },
+      {
+        "role": "user",
+        "content": "请批阅下面这道 SQL 练习。\n\n题目：\nHow many heads of the departments are older than 56 ?\n\n数据库 ID：\ndepartment_management\n\n相关 Schema：\n- head: head_ID (number) [PK], name (text), born_state (text), age (number)\n\n学生 SQL：\n```sql\nSELECT MAX(*) FROM head WHERE age > 56\n```"
+      },
+      {
+        "role": "assistant",
+        "content": "正确SQL：\n```sql\nSELECT count(*) FROM head WHERE age > 56\n```\n\n纠错解析：\n错误类型：聚合函数错误\n错误定位：SELECT 子句中的聚合表达式\n原因说明：学生把原本应该使用的聚合函数 `COUNT` 误写成了 `MAX`。聚合函数一旦写错，统计口径就会变化，结果不再对应题目想问的内容。\n修改建议：将聚合函数 `MAX` 改回 `COUNT`，并保持被聚合的列不变。"
+      }
+    ]
+  },
+  {
+    "id": "train-train_spider-1-order_direction",
+    "split": "train",
+    "source_file": "train_spider.json",
+    "source_index": 1,
+    "db_id": "department_management",
+    "question": "List the name, born state and age of the heads of departments ordered by age.",
+    "schema_text": "- head: head_ID (number) [PK], name (text), born_state (text), age (number)",
+    "wrong_sql": "SELECT name, born_state, age FROM head ORDER BY age DESC",
+    "correct_sql": "SELECT name , born_state , age FROM head ORDER BY age",
+    "error_type": "排序方向错误",
+    "messages": [
+      {
+        "role": "system",
+        "content": "你是数据库课程中的 SQL 智能批阅助手。\n你需要根据题目、相关表结构和学生提交的 SQL，输出标准答案以及清晰的纠错解析。\n请始终使用下面的固定格式作答：\n\n正确SQL：\n```sql\n...\n```\n\n纠错解析：\n错误类型：...\n错误定位：...\n原因说明：...\n修改建议：...\n"
+      },
+      {
+        "role": "user",
+        "content": "请批阅下面这道 SQL 练习。\n\n题目：\nList the name, born state and age of the heads of departments ordered by age.\n\n数据库 ID：\ndepartment_management\n\n相关 Schema：\n- head: head_ID (number) [PK], name (text), born_state (text), age (number)\n\n学生 SQL：\n```sql\nSELECT name, born_state, age FROM head ORDER BY age DESC\n```"
+      },
+      {
+        "role": "assistant",
+        "content": "正确SQL：\n```sql\nSELECT name , born_state , age FROM head ORDER BY age\n```\n\n纠错解析：\n错误类型：排序方向错误\n错误定位：ORDER BY 子句\n原因说明：学生把排序方向写成了 `DESC`，而题目需要的是 `ASC`。排序方向写反会直接改变最终返回记录的先后顺序。\n修改建议：将 ORDER BY 的排序方向改回 `ASC`。"
+      }
+    ]
+  },
+  {
+    "id": "validation-dev-0-aggregate_function",
+    "split": "validation",
+    "source_file": "dev.json",
+    "source_index": 0,
+    "db_id": "concert_singer",
+    "question": "How many singers do we have?",
+    "schema_text": "- singer: Singer_ID (number) [PK], Name (text), Country (text), Song_Name (text), Song_release_year (text), Age (number), Is_male (others)",
+    "wrong_sql": "SELECT MAX(*) FROM singer",
+    "correct_sql": "SELECT count(*) FROM singer",
+    "error_type": "聚合函数错误",
+    "messages": [
+      {
+        "role": "system",
+        "content": "你是数据库课程中的 SQL 智能批阅助手。\n你需要根据题目、相关表结构和学生提交的 SQL，输出标准答案以及清晰的纠错解析。\n请始终使用下面的固定格式作答：\n\n正确SQL：\n```sql\n...\n```\n\n纠错解析：\n错误类型：...\n错误定位：...\n原因说明：...\n修改建议：...\n"
+      },
+      {
+        "role": "user",
+        "content": "请批阅下面这道 SQL 练习。\n\n题目：\nHow many singers do we have?\n\n数据库 ID：\nconcert_singer\n\n相关 Schema：\n- singer: Singer_ID (number) [PK], Name (text), Country (text), Song_Name (text), Song_release_year (text), Age (number), Is_male (others)\n\n学生 SQL：\n```sql\nSELECT MAX(*) FROM singer\n```"
+      },
+      {
+        "role": "assistant",
+        "content": "正确SQL：\n```sql\nSELECT count(*) FROM singer\n```\n\n纠错解析：\n错误类型：聚合函数错误\n错误定位：SELECT 子句中的聚合表达式\n原因说明：学生把原本应该使用的聚合函数 `COUNT` 误写成了 `MAX`。聚合函数一旦写错，统计口径就会变化，结果不再对应题目想问的内容。\n修改建议：将聚合函数 `MAX` 改回 `COUNT`，并保持被聚合的列不变。"
+      }
+    ]
+  },
+  {
+    "id": "validation-dev-1-aggregate_function",
+    "split": "validation",
+    "source_file": "dev.json",
+    "source_index": 1,
+    "db_id": "concert_singer",
+    "question": "What is the total number of singers?",
+    "schema_text": "- singer: Singer_ID (number) [PK], Name (text), Country (text), Song_Name (text), Song_release_year (text), Age (number), Is_male (others)",
+    "wrong_sql": "SELECT MAX(*) FROM singer",
+    "correct_sql": "SELECT count(*) FROM singer",
+    "error_type": "聚合函数错误",
+    "messages": [
+      {
+        "role": "system",
+        "content": "你是数据库课程中的 SQL 智能批阅助手。\n你需要根据题目、相关表结构和学生提交的 SQL，输出标准答案以及清晰的纠错解析。\n请始终使用下面的固定格式作答：\n\n正确SQL：\n```sql\n...\n```\n\n纠错解析：\n错误类型：...\n错误定位：...\n原因说明：...\n修改建议：...\n"
+      },
+      {
+        "role": "user",
+        "content": "请批阅下面这道 SQL 练习。\n\n题目：\nWhat is the total number of singers?\n\n数据库 ID：\nconcert_singer\n\n相关 Schema：\n- singer: Singer_ID (number) [PK], Name (text), Country (text), Song_Name (text), Song_release_year (text), Age (number), Is_male (others)\n\n学生 SQL：\n```sql\nSELECT MAX(*) FROM singer\n```"
+      },
+      {
+        "role": "assistant",
+        "content": "正确SQL：\n```sql\nSELECT count(*) FROM singer\n```\n\n纠错解析：\n错误类型：聚合函数错误\n错误定位：SELECT 子句中的聚合表达式\n原因说明：学生把原本应该使用的聚合函数 `COUNT` 误写成了 `MAX`。聚合函数一旦写错，统计口径就会变化，结果不再对应题目想问的内容。\n修改建议：将聚合函数 `MAX` 改回 `COUNT`，并保持被聚合的列不变。"
+      }
+    ]
+  }
+]
